@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: newsfeed-deployment
+  namespace: staging
+  labels:
+    app: newsfeed
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: newsfeed
+  template:
+    metadata:
+      labels:
+        app: newsfeed
+    spec:
+      containers:
+        - name: newsfeed
+          image: gcr.io/fleet-geode-253715/newsfeed-thoughtworks:1.0
+          env:
+          - name: "APP_PORT"
+            value: "8081"
+          ports:
+            - containerPort: 8081

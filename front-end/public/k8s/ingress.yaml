@@ -1,0 +1,9 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: frontend-static-ingress
+  namespace: staging
+spec:
+  backend:
+    serviceName: frontend-static-services
+    servicePort: 8000

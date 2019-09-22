@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: "frontend-static-services"
+  namespace: "staging"
+  labels:
+    app: svc-frontend-static
+spec:
+  selector:
+    app: "frontend-static"
+  ports:
+    - name: http 
+      protocol: TCP
+      port: 8000
+  type: NodePort

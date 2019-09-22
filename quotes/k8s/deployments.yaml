@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: quotes-deployment
+  namespace: staging
+  labels:
+    app: quotes
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: quotes
+  template:
+    metadata:
+      labels:
+        app: quotes
+    spec:
+      containers:
+        - name: quotes
+          image: gcr.io/fleet-geode-253715/quotes-thoughtworks:1.0
+          env:
+          - name: "APP_PORT"
+            value: "8080"
+          ports:
+            - containerPort: 8080
