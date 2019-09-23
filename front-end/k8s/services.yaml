@@ -1,0 +1,16 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: "frontend-services"
+  namespace: "staging"
+  labels:
+    app: svc-frontend
+spec:
+  selector:
+    app: "frontend"
+  ports:
+    - name: http 
+      protocol: TCP
+      port: 8082
+      targetPort: 8082
+  type: NodePort
