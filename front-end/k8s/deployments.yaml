@@ -28,6 +28,9 @@ spec:
           - name: "NEWSFEED_SERVICE_URL"
             value: "http://newsfeed-services.staging.svc.cluster.local:8081"
           - name: "NEWSFEED_SERVICE_TOKEN"
-            value: "T1&eWbYXNWG1w1^YGKDPxAWJ@^et^&kX"
+            valueFrom:
+              secretKeyRef:
+                name: newsfeed-secrets
+                key: tokenNewsfeed
           ports:
             - containerPort: 8082
