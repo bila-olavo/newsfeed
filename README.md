@@ -1,4 +1,15 @@
-# DevOps Assessment
+# Newsfeed
+
+This example contains the simplest way to deploy apps using Docker, Kubernetes, Terraform on Google Cloud Platform for a non-production environment, however, can be an initial step for production.
+
+## Prerequisites
+
+* [Docker](https://docs.docker.com/install/)
+* [Gcloud command-line interface](https://cloud.google.com/sdk/gcloud/)
+* [Kubernetes Control (kubectl)](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
+* [Terraform](https://www.terraform.io/downloads.html)
+
+# Apps Info
 
 This project contains three services:
 
@@ -6,9 +17,9 @@ This project contains three services:
 * `newsfeed` which aggregates several RSS feeds together
 * `front-end` which calls the two previous services and displays the results.
 
-## Prerequisites
+## Prerequisites to run local
 
-* Java
+* [Docker](https://docs.docker.com/install/)
 * [Leiningen](http://leiningen.org/) (can be installed using `brew install leiningen`)
 
 ## Running tests
@@ -21,17 +32,23 @@ First you need to ensure that the common libraries are installed: run `make libs
 
 To build all the JARs and generate the static tarball, run the `make clean all` command from this directory. The JARs and tarball will appear in the `build/` directory.
 
-### Static assets
-
-`cd` to `front-end/public` and run `./serve.py` (you need Python3 installed). This will serve the assets on port 8000.
-
-## Running
+# Running as Docker
 
 All the apps take environment variables to configure them and expose the URL `/ping` which will just return a 200 response that you can use with e.g. a load balancer to check if the app is running.
 
-### Front-end app
+## Static assets
 
-`java -jar front-end.jar`
+### Build Docker Image
+
+`docker build --tag frontend-static:1.0  --file front-end/public/Dockerfile .`
+
+### Running Container
+
+`docker run --rm --name frontend-static --publish 8000:8000 frontend-static:1.0`
+
+Note: This will serve the assets on port 8000.
+
+---- 
 
 *Environment variables*:
 
@@ -41,19 +58,47 @@ All the apps take environment variables to configure them and expose the URL `/p
 * `NEWSFEED_SERVICE_URL`: The URL on which to find the newsfeed service
 * `NEWSFEED_SERVICE_TOKEN`: The authentication token that allows the app to talk to the newsfeed service. This should be treated as an application secret. The value should be: `T1&eWbYXNWG1w1^YGKDPxAWJ@^et^&kX`
 
-### Quote service
+## Quote Service
 
-`java -jar quotes.jar`
+### Build Docker Image
 
-*Environment variables*
+`docker build --tag quotes:1.0 --file quotes/Dockerfile .`
 
-* `APP_PORT`: The port on which to run the app
+### Running Container
 
-### Newsfeed service
+`docker run --rm --name quotes-thoughtworks --hostname quotes-thoughtworks --env APP_PORT=8080 quotes:1.0`
 
-`java -jar newsfeed.jar`
+Note: This will serve service on port 8080.
 
-*Environment variables*
+## Newsfeed
 
-* `APP_PORT`: The port on which to run the app
+### Build Docker Image
+
+`docker build --tag newsfeed:1.0 --file newsfeed/Dockerfile .`
+
+### Running Container
+
+`docker run --rm --name newsfeed --hostname newsfeed --env APP_PORT=8081 newsfeed:1.0 `
+
+Note: This will serve service on port 8081.
+
+## Front-end 
+
+### Build Docker Image
+
+`docker build --tag frontend:1.0 --file front-end/Dockerfile .`
+
+### Running Container
+
+`docker run --rm --name frontend --env APP_PORT=8082 --env STATIC_URL=http://0.0.0.0:8000 --env QUOTE_SERVICE_URL=http://quotes:8080 --env NEWSFEED_SERVICE_URL=http://newsfeed:8081 --env  NEWSFEED_SERVICE_TOKEN="T1&eWbYXNWG1w1^YGKDPxAWJ@^et^&kX" --link quotes:quotes --link  newsfeed:newsfeed --publish 8082:8082 frontend:1.0`
+
+Note: This will serve service on port 8082.
+
+
+```
+Local URL: http://localhost:8082
+
+```
+
+# Running on GKS (Google Kubernetes Service)
 
