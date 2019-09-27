@@ -21,5 +21,9 @@ spec:
           env:
           - name: "APP_PORT"
             value: "8080"
+          readinessProbe:
+            httpGet:
+              path: /ping
+              port: 8080
           ports:
             - containerPort: 8080

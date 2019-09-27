@@ -32,5 +32,9 @@ spec:
               secretKeyRef:
                 name: newsfeed-secrets
                 key: tokenNewsfeed
+          readinessProbe:
+            httpGet:
+              path: /ping
+              port: 8082
           ports:
             - containerPort: 8082
