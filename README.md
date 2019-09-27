@@ -17,7 +17,7 @@ This project contains three services:
 * `newsfeed` which aggregates several RSS feeds together
 * `front-end` which calls the two previous services and displays the results.
 
-## Prerequisites to run local
+## Prerequisites to build and run
 
 * [Docker](https://docs.docker.com/install/)
 * [Leiningen](http://leiningen.org/) (can be installed using `brew install leiningen`)
@@ -32,15 +32,15 @@ First you need to ensure that the common libraries are installed: run `make libs
 
 To build all the JARs and generate the static tarball, run the `make clean all` command from this directory. The JARs and tarball will appear in the `build/` directory.
 
-# Running as Docker
+## Running local as Docker
 
-## Static assets
+### Static assets
 
-### Build Docker Image
+#### Build Docker Image
 
 `docker build --tag frontend-static:1.0  --file front-end/public/Dockerfile .`
 
-### Running Container
+#### Running Container
 
 `docker run --rm --name frontend-static --publish 8000:8000 frontend-static:1.0`
 
@@ -58,37 +58,37 @@ All the apps take environment variables to configure them and expose the URL `/p
 * `NEWSFEED_SERVICE_URL`: The URL on which to find the newsfeed service
 * `NEWSFEED_SERVICE_TOKEN`: The authentication token that allows the app to talk to the newsfeed service. This should be treated as an application secret. The value should be: `T1&eWbYXNWG1w1^YGKDPxAWJ@^et^&kX`
 
-## Quote Service
+### Quote Service
 
-### Build Docker Image
+#### Build Docker Image
 
 `docker build --tag quotes:1.0 --file quotes/Dockerfile .`
 
-### Running Container
+#### Running Container
 
 `docker run --rm --name quotes --hostname quotes --env APP_PORT=8080 quotes:1.0`
 
 Note: This will serve service on port 8080.
 
-## Newsfeed
+### Newsfeed
 
-### Build Docker Image
+#### Build Docker Image
 
 `docker build --tag newsfeed:1.0 --file newsfeed/Dockerfile .`
 
-### Running Container
+#### Running Container
 
 `docker run --rm --name newsfeed --hostname newsfeed --env APP_PORT=8081 newsfeed:1.0 `
 
 Note: This will serve service on port 8081.
 
-## Front-end 
+### Front-end 
 
-### Build Docker Image
+#### Build Docker Image
 
 `docker build --tag frontend:1.0 --file front-end/Dockerfile .`
 
-### Running Container
+#### Running Container
 
 `docker run --rm --name frontend --env APP_PORT=8082 --env STATIC_URL=http://0.0.0.0:8000 --env QUOTE_SERVICE_URL=http://quotes:8080 --env NEWSFEED_SERVICE_URL=http://newsfeed:8081 --env  NEWSFEED_SERVICE_TOKEN="T1&eWbYXNWG1w1^YGKDPxAWJ@^et^&kX" --link quotes:quotes --link  newsfeed:newsfeed --publish 8082:8082 frontend:1.0`
 
@@ -125,7 +125,7 @@ kubectl cluster-info
 ```
 ## Step 4:
 
-Create namespace `staging` for using in this example
+Create namespace `staging` for using on this example
 
 ```
 kubectl create namespace staging
@@ -210,8 +210,43 @@ kubectl create -f service.yaml
 kubectl create -f ingress.yaml
 ```
 
-Note: you can get static assets url: `"kubectl get ingress frontend-static-ingress -n staging"` column `"ADDRESS"`, check via CURL: `http://ADDRESS/css/bootstrap.min.css` 
+*Note: you can get static assets url: `"kubectl get ingress frontend-static-ingress -n staging"` column `"ADDRESS"`, check via CURL: `http://ADDRESS/css/bootstrap.min.css`*
 
-## Step final:
+## Final Step:
 
 Execute `"kubectl get frontend-ingress -n staging"` copy the column `"ADDRESS"` and paste it on your browser `"http://ADDRESS"`, hopefully you are able to see the `newsfeed` running. 
+
+### Deploying releases:
+
+
+```
+kubectl set image deployment/APPLICATION_NAME-deployment APPLICATION_NAME-deployment=gcr.io/YOUR_PROJECT_ID/APPLICATION_NAME:TAGVERSION -n staging
+kubectl rollout status deployment/APPLICATION_NAME-deployment -n staging 
+```
+
+
+## One Click Installation
+
+Navigate to script `./oneClickInstall.sh` 
+
+*Note: this script is interpreted by `!/bin/bash` this may not work for all OS versions.*
+
+# Considerations
+
+## Why's?
+
+### Kubernetes
+* ....
+  
+
+### Terraform
+* ....
+
+## Next steps
+
+* .....
+
+```
+URL Newsfeed: http://34.102.217.83/
+```
+---- 
