@@ -94,10 +94,10 @@ k8sMenu(){
     clear
     echo "Which app do you wanna install on k8s? Sorted by Priority "
     echo ------------------------------------------------------------
-    echo "1. Static Assets"
-    echo "2. Quotes Service"
-    echo "3. Newsfeed"
-    echo "4. Frontend"
+    echo "1. Static Assets - appId: frontend-static"
+    echo "2. Quotes Service - appId: quotes"
+    echo "3. Newsfeed - appId: newsfeed"
+    echo "4. Frontend - appId: frontend"
     echo "5. Back <-"
     echo "0. Exit!"
     echo -n "Enter Option ==> "
@@ -118,10 +118,10 @@ deployMenu(){
     clear
     echo "Which app do wanna deploy a new release?"
     echo ------------------------------------------------------------
-    echo "1. Static Assets"
-    echo "2. Quotes Service"
-    echo "3. Newsfeed"
-    echo "4. Frontend"
+    echo "1. Static Assets - appId: frontend-static"
+    echo "2. Quotes Service - appId: quotes"
+    echo "3. Newsfeed - appId: newsfeed"
+    echo "4. Frontend - appId: frontend"
     echo "5. Back <-"
     echo "0. Exit!"
     echo -n "Enter Option ==> "
@@ -188,7 +188,7 @@ rolloutImage(){
 
 pushImageMenu(){
     clear
-    echo "Have you Pushed the Docker Image to registry?"
+    echo "Have you pushed the Docker Image to registry?"
     echo " Selected app: ${appName}" 
     echo ------------------------------------------------------------
     echo "1. Yes"
@@ -209,10 +209,10 @@ pushImageMenu(){
 
 finalStep(){
     clear
-    echo "What are you doing?"
-    echo " Selected app: ${appName}" 
+    echo "What are you doing?(Final Step)" 
+    echo "Selected app: ${appName}" 
     echo ------------------------------------------------------------
-    echo "1. Installing"
+    echo "1. Installing (first time)"
     echo "2. Deploying new release"
     echo "3. Back to Main Menu<-"
     echo "0. Exit!"
@@ -269,7 +269,8 @@ pushImage(){
 
 k8sMenuInstallation(){
     clear
-    echo " Have you edit ${appName}'s deployment.yaml Manifest?"
+    echo " Have you updated ${appName}'s deployments.yaml Manifest?"
+    echo " Selected app: ${appName}" 
     echo ------------------------------------------------------------
     echo "1. Yes"
     echo "2. No, replace for me!"
@@ -355,7 +356,8 @@ namespaceStaging(){
 
 dockerTagMenu(){
     clear
-    echo "Have you Tagged the Docker Image?"
+    echo "Have you tagged your local Docker Image? e.g gcr.io/fleet-geode-253715/quotes"
+    echo " Selected app: ${appName}" 
     echo ------------------------------------------------------------
     echo "1. Yes"
     echo "2. No, do it for me"

@@ -36,7 +36,7 @@ To build all the JARs and generate the static tarball, run the `make clean all` 
 
 Navigate to script `./oneClickInstall.sh` 
 
-*Note: this script is interpreted by `!/bin/bash` this may not work for all OS versions. Please do not expect advanced validations*
+*Note: this script is interpreted by `!/bin/bash` and might not work for all OS versions. Please do not expect advanced validations*
 
 ## Running local as Docker
 
