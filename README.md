@@ -1,6 +1,6 @@
 # Newsfeed
 
-This example contains a simple solution to deploy apps using Docker, Kubernetes, Terraform on Google Cloud Platform for a non-production environment, however, can be an initial step for production.
+This example contains a simple solution to deploy apps using Docker, Kubernetes and Terraform on Google Cloud Platform for a non-production environment, however, can be an initial step for production.
 
 ## Prerequisites
 
@@ -31,6 +31,12 @@ You can run the tests of all apps by using `make test`
 First you need to ensure that the common libraries are installed: run `make libs` to install them to your local `~/.m2` repository. This will allow you to build the JARs.
 
 To build all the JARs and generate the static tarball, run the `make clean all` command from this directory. The JARs and tarball will appear in the `build/` directory.
+
+## One Click Installation
+
+Navigate to script `./oneClickInstall.sh` 
+
+*Note: this script is interpreted by `!/bin/bash` this may not work for all OS versions. Please do not expect advanced validations*
 
 ## Running local as Docker
 
@@ -225,12 +231,6 @@ kubectl rollout status deployment/APPLICATION_NAME-deployment -n staging
 ```
 
 
-## One Click Installation
-
-Navigate to script `./oneClickInstall.sh` 
-
-*Note: this script is interpreted by `!/bin/bash` this may not work for all OS versions. Please do not expect advanced validations*
-
 # Considerations
 
 ## Why's?
@@ -253,11 +253,11 @@ Navigate to script `./oneClickInstall.sh`
 
 ## Next steps
 
-* SSL Endpoint
+* Add SSL
 * Helm for better control of objects on k8s
 * Adopt CI/CD tools - Spinnaker, GoCD, Gitlab ...
-* Improve k8s template to be more dynamic
-* High Availability approach ( min 2 replicas, quorum ....)
+* Improve k8s templates to be more dynamic
+* High Availability approaches ( min 2 replicas, quorum ....)
 * ...
 
 ```

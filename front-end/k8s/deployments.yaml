@@ -22,7 +22,7 @@ spec:
           - name: "APP_PORT"
             value: "8082"
           - name: "STATIC_URL"
-            value: "http://34.95.103.228"
+            value: "http://34.102.233.36"
           - name: "QUOTE_SERVICE_URL"
             value: "http://quotes-services.staging.svc.cluster.local:8080"
           - name: "NEWSFEED_SERVICE_URL"
