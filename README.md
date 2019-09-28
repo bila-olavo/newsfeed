@@ -229,18 +229,25 @@ kubectl rollout status deployment/APPLICATION_NAME-deployment -n staging
 
 Navigate to script `./oneClickInstall.sh` 
 
-*Note: this script is interpreted by `!/bin/bash` this may not work for all OS versions.*
+*Note: this script is interpreted by `!/bin/bash` this may not work for all OS versions. Please do not expect advanced validations*
 
 # Considerations
 
 ## Why's?
 
 ### Kubernetes
-* ....
+* Easily portable
+* Cloud native monitoring/observability (prometheus, stackdrive, ...)
+* Easy to onboard new apps
+* Native deployment strategies canary releases, blue/green, rollout update, ...
+* same run local, same run everywhere else
+* Good Documentation
   
 
 ### Terraform
-* ....
+* Support cloud providers
+* Easy to implement
+* Good Documentation
 
 ## Next steps
 
