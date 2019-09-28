@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: newsfeed
-          image: gcr.io/fleet-geode-253715/newsfeed-thoughtworks:1.0
+          image: gcr.io/fleet-geode-253715/newsfeed:1.0
           env:
           - name: "APP_PORT"
             value: "8081"

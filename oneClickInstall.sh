@@ -104,10 +104,10 @@ k8sMenu(){
     read k8sMenuId
     echo
     case $k8sMenuId in
-        1) appName="frontend-static"; k8sMenuInstallation;;
-        2) appName="quotes"; k8sMenuInstallation;;
-        3) appName="newsfeed"; k8sMenuInstallation;;
-        4) appName="frontend"; k8sMenuInstallation;;
+        1) export appName="frontend-static"; k8sMenuInstallation;;
+        2) export appName="quotes"; k8sMenuInstallation;;
+        3) export appName="newsfeed"; k8sMenuInstallation;;
+        4) export appName="frontend"; k8sMenuInstallation;;
         5) mainMenu;;
         0) exit;;
         *) "Sorry, Invalid Option!"; sleep 2s; echo ; k8sMenu ;;
@@ -128,19 +128,58 @@ deployMenu(){
     read deployMenuId
     echo
     case $deployMenuId in
-        1) appName="frontend-static"; dockerTagMenu;;
-        2) appName="quotes"; dockerTagMenu;;
-        3) appName="newsfeed"; dockerTagMenu;;
-        4) appName="frontend"; dockerTagMenu;;
+        1) export appName="frontend-static"; tagToPushMenu;;
+        2) export appName="quotes"; tagToPushMenu;;
+        3) export appName="newsfeed"; tagToPushMenu;;
+        4) export appName="frontend"; tagToPushMenu;;
         5) mainMenu;;
         0) exit;;
         *) "Sorry, Invalid Option!"; sleep 2s; echo ; deployMenu ;;
     esac
 }
 
+tagToPushMenu(){
+    clear
+    echo " Have you pushed the new version to Docker Registry?"
+    echo " Selected app: ${appName}" 
+    echo ------------------------------------------------------------
+    echo "1. Yes"
+    echo "2. No, do it for me" 
+    echo -n "Enter Option==>"
+    read booleanId
+    echo
+    if [[ ${booleanId} -eq 1 ]]; then
+        clear
+        echo "Please provide docker image version. e.g 1.0 "
+        echo " Selected app: ${appName}" 
+        echo ------------------------------------------------------------
+        echo
+        echo -n "Version==>"
+        read tagVersion
+        echo
+        echo "Please provide your projectId. e.g: fleet-geode-253715"
+        echo ------------------------------------------------------------
+        echo
+        echo -n "Google Project ID==>"
+        read googleId
+        echo    
+        sleep 2s
+        rolloutImage
+    else
+        dockerTagMenu
+    fi    
+}
+
 rolloutImage(){
-    kubectl set image deployment/${appName}-deployment ${appName}-deployment=gcr.io/${googleId}/${appName}:${tagVersion} -n staging
-    echo "Deploying ${appName} ..."
+    echo "Deploying gcr.io/${googleId}/${appName}:${tagVersion} ..."
+    if [[ ${appName} == "frontend" ]]; then
+        kubectl set image deployment/frontend-deployment frontend-deployment=gcr.io/${googleId}/frontend:${tagVersion} -n staging
+        sleep 5s
+        kubectl rollout status deployment/${appName}-deployment -n staging
+        sleep 5s
+        deployMenu
+    fi
+    kubectl set image deployment/${appName}-deployment ${appName}=gcr.io/${googleId}/${appName}:${tagVersion} -n staging
     sleep 5s
     kubectl rollout status deployment/${appName}-deployment -n staging
     sleep 5s
@@ -149,7 +188,8 @@ rolloutImage(){
 
 pushImageMenu(){
     clear
-    echo "Have you Pushed the Docker Image?"
+    echo "Have you Pushed the Docker Image to registry?"
+    echo " Selected app: ${appName}" 
     echo ------------------------------------------------------------
     echo "1. Yes"
     echo "2. No, do it for me"
@@ -170,6 +210,7 @@ pushImageMenu(){
 finalStep(){
     clear
     echo "What are you doing?"
+    echo " Selected app: ${appName}" 
     echo ------------------------------------------------------------
     echo "1. Installing"
     echo "2. Deploying new release"
@@ -204,6 +245,7 @@ pushImage(){
     echo
     clear
     echo " Please, confirm the Image to push to Registry:"
+    echo " Selected app: ${appName}" 
     echo ------------------------------------------------------------
     echo
     echo "gcr.io/${googleId}/${appName}:${tagVersion}"
@@ -214,10 +256,10 @@ pushImage(){
     echo -n "Enter Option ==> "
     read booleanId    
     if [[ ${booleanId} -eq 1 ]]; then
-        #gcloud docker -- push gcr.io/${googleId}/${appName}:${tagVersion}
+        gcloud docker -- push gcr.io/${googleId}/${appName}:${tagVersion}
         echo "Pushed!"
         sleep 2s
-        pushImageMenu
+        finalStep
     else
         echo "Ops something went wrong!"
         sleep 2s
@@ -334,7 +376,8 @@ dockerTagMenu(){
 
 dockerTag(){
     clear
-    echo " Please provide the local Docker TAG. e.g quotes:1.0"
+    echo " Please provide the local Docker TAG. e.g quotes:1.0 "
+    echo " Selected app: ${appName}" 
     echo ------------------------------------------------------------
     echo
     echo -n "Local Docker TAG==>"
@@ -349,6 +392,7 @@ dockerTag(){
     echo
     clear
     echo " Please provide the tag version of Docker Image. e.g 1.0"
+    echo " Selected app: ${appName}" 
     echo ------------------------------------------------------------
     echo
     echo -n "Version==>"
@@ -356,6 +400,7 @@ dockerTag(){
     echo
     clear
     echo " Please, confirm:"
+    echo " Selected app: ${appName}" 
     echo ------------------------------------------------------------
     echo
     echo "${dockerLocalTag} to gcr.io/${googleId}/${appName}:${tagVersion}"

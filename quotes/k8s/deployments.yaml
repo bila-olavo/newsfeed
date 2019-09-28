@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: quotes
-          image: gcr.io/fleet-geode-253715/quotes-thoughtworks:1.0
+          image: gcr.io/fleet-geode-253715/quotes:1.0
           env:
           - name: "APP_PORT"
             value: "8080"

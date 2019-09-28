@@ -17,12 +17,12 @@ spec:
     spec:
       containers:
         - name: frontend-deployment
-          image: gcr.io/fleet-geode-253715/frontend-thoughtworks:1.2
+          image: gcr.io/fleet-geode-253715/frontend:1.2
           env:
           - name: "APP_PORT"
             value: "8082"
           - name: "STATIC_URL"
-            value: "http://34.102.233.36"
+            value: "http://34.95.103.228"
           - name: "QUOTE_SERVICE_URL"
             value: "http://quotes-services.staging.svc.cluster.local:8080"
           - name: "NEWSFEED_SERVICE_URL"

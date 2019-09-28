@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: frontend-static
-          image: gcr.io/fleet-geode-253715/frontend-static-thoughtworks:1.1
+          image: gcr.io/fleet-geode-253715/frontend-static:1.1
           readinessProbe:
             httpGet:
               path: /
