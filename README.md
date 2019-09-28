@@ -238,20 +238,27 @@ Navigate to script `./oneClickInstall.sh`
 ### Kubernetes
 * Easily portable
 * Cloud native monitoring/observability (prometheus, stackdrive, ...)
-* Easy to onboard new apps
+* Easy for onboarding new apps (Golang, Java, Scala, Python, ...)
 * Native deployment strategies canary releases, blue/green, rollout update, ...
 * same run local, same run everywhere else
 * Good Documentation
+* ...
   
 
 ### Terraform
-* Support cloud providers
+* Support different cloud providers
 * Easy to implement
 * Good Documentation
+* ...
 
 ## Next steps
 
-* .....
+* SSL Endpoint
+* Helm for better control of objects on k8s
+* Adopt CI/CD tools - Spinnaker, GoCD, Gitlab ...
+* Improve k8s template to be more dynamic
+* High Availability approach ( min 2 replicas, quorum ....)
+* ...
 
 ```
 URL Newsfeed: http://34.102.217.83/
