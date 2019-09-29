@@ -236,12 +236,17 @@ kubectl rollout status deployment/APPLICATION_NAME-deployment -n staging
 ## Why's?
 
 ### Kubernetes
+
+  *Kubernetes does the things that the very best system administrator would do: automation, failover, centralized logging, monitoring. It takes what we've learned in the DevOps community and makes it the default, out of the box.* By Kelsey Hightower
+
+
 * Easily portable
 * Cloud native monitoring/observability (prometheus, stackdrive, ...)
 * Easy for onboarding new apps (Golang, Java, Scala, Python, ...)
 * Native deployment strategies canary releases, blue/green, rollout update, ...
 * same run local, same run everywhere else
 * Good Documentation
+* Big community
 * ...
   
 
@@ -255,9 +260,8 @@ kubectl rollout status deployment/APPLICATION_NAME-deployment -n staging
 
 * Add SSL
 * Helm for better control of objects on k8s
-* Adopt CI/CD tools - Spinnaker, GoCD, Gitlab ...
-* Improve k8s templates to be more dynamic
-* High Availability approaches ( min 2 replicas, quorum ....)
+* Adopt CI/CD tool e.g: Spinnaker, GoCD, Gitlab ...
+* High Availability approaches ( min 2 replicas, quorum, MultiAZs, ...)
 * ...
 
 ```
