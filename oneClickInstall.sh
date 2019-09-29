@@ -165,8 +165,12 @@ tagToPushMenu(){
         echo    
         sleep 2s
         rolloutImage
-    else
+    elif [[ ${booleanId} -eq 2 ]]; then
         dockerTagMenu
+    else
+        echo "Something went wrong!"
+        sleep 2s
+        tagToPushMenu
     fi    
 }
 
